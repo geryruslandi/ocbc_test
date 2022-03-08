@@ -1,5 +1,5 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit'
-import { loggedInUserSlice } from './login-data';
+import { loggedInUserSlice } from './user-data';
 import {
     persistStore,
     persistReducer,
@@ -19,7 +19,7 @@ const persistConfig = {
 }
 
 const rootReducer = combineReducers({
-    loggedInUser: loggedInUserSlice.reducer
+    userData: loggedInUserSlice.reducer
 })
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)

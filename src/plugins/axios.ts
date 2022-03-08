@@ -11,14 +11,18 @@ export default class Axios{
         });
 
         this.axiosClient.interceptors.response.use(
-            (response) => {return response},
-            (error) => {ToastAndroid.show(error.response.data.error, ToastAndroid.LONG)}
+            (response) => response,
+            (error) => {
+                ToastAndroid.show(error.response.data.error, ToastAndroid.LONG)
+                return Promise.reject(error)
+            }
         )
     }
 
     setHeaders(headers: AxiosRequestHeaders) {
         this.axiosClient.interceptors.request.use((config) => {
             config.headers = headers;
+            return config;
         });
     }
 

@@ -1,4 +1,4 @@
-import Axios from "./axios";
+import Axios from "./Axios";
 import Config from "react-native-config";
 
 class Api{
@@ -12,6 +12,10 @@ class Api{
         return this.axios.post('/login', {
             username, password
         })
+    }
+
+    getBalance() {
+        return this.axios.get('/balance')
     }
 }
 

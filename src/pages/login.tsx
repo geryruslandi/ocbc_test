@@ -4,7 +4,7 @@ import { Button, TextInput } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import { useAppDispatch } from '../hooks'
-import { loginThunk } from '../store/login-data/thunks';
+import { loginThunk } from '../store/user-data/thunks';
 
 const windowWidth = Dimensions.get('screen').width;
 
@@ -15,7 +15,6 @@ export default function Login() {
     const [loginButtonLoading, setLoginButtonLoading] = useState(false);
 
     const dispatch = useAppDispatch();
-
 
     async function login() {
 
