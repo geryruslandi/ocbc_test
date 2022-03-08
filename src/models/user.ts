@@ -1,8 +1,13 @@
-export default class User {
-    username: String;
-    accountNumber: String;
+export interface UserInterface {
+    username: string;
+    accountNumber: string;
+}
 
-    constructor(username: String, accountNumber: String){
+export default class User implements UserInterface{
+    username: string;
+    accountNumber: string;
+
+    constructor(username: string, accountNumber: string){
         this.username = username;
         this.accountNumber = accountNumber;
     }

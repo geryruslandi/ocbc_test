@@ -1,9 +1,9 @@
 import { PayloadAction } from "@reduxjs/toolkit";
-import User from "../../models/user";
-import { LoggedInUserState } from "./state";
+import { LoggedInUserState } from ".";
+import { UserInterface } from "../../models/user";
 
 export const reducers = {
-    setUser(state: LoggedInUserState, action: PayloadAction<User>) {
+    setUser(state: LoggedInUserState, action: PayloadAction<UserInterface>) {
         state.profile = action.payload;
     },
 

@@ -1,8 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit'
-import { loggedInUserSlice } from './logged-in-user/slice';
+import { loggedInUserSlice } from './login-data';
 
-export default configureStore({
+
+const store = configureStore({
     reducer: {
         loggedInUser: loggedInUserSlice.reducer
     }
 });
+
+export type RootState = ReturnType<typeof store.getState>
+export type AppDispatch = typeof store.dispatch
+export default store;

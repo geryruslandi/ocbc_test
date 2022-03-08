@@ -1,15 +1,32 @@
 import React, { useState } from 'react';
-import { Image, StyleSheet, Text, View } from 'react-native';
-import { Dimensions } from 'react-native';
+import { Image, StyleSheet, Text, View, Dimensions } from 'react-native';
 import { Button, TextInput } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import auth from '../services/auth';
 
-const windowHeight = Dimensions.get('window').height;
+import { useAppDispatch } from '../hooks'
+import { loginThunk } from '../store/login-data/thunks';
+
 const windowWidth = Dimensions.get('window').width;
 
 export default function Login() {
+
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [loginButtonLoading, setLoginButtonLoading] = useState(false);
+
+    const dispatch = useAppDispatch();
+
+
+    async function login() {
+
+        if(loginButtonLoading) return;
+
+        setLoginButtonLoading(true);
+        await dispatch(loginThunk({username, password}))
+        setLoginButtonLoading(false);
+    }
+
 
     return (
         <View style={styles.pageContainer}>
@@ -35,9 +52,10 @@ export default function Login() {
                         style={styles.input}/>
                 </View>
                 <Button
+                    loading={loginButtonLoading}
                     color="#EF393B"
                     mode="contained"
-                    onPress={() => console.log('Pressed')}>
+                    onPress={login}>
 
                     <Icon name="account-arrow-right" size={21} color="white"/>
                     <View style={{ width: 5, height: 1 }} />
