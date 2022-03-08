@@ -2,10 +2,8 @@ import React, { useState } from 'react';
 import { Image, StyleSheet, Text, View, Dimensions } from 'react-native';
 import { Button, TextInput } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { useSelector } from 'react-redux';
 
 import { useAppDispatch } from '../hooks'
-import { loggedInUserSelector } from '../store/login-data/selector';
 import { loginThunk } from '../store/login-data/thunks';
 
 const windowWidth = Dimensions.get('screen').width;
@@ -15,7 +13,6 @@ export default function Login() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [loginButtonLoading, setLoginButtonLoading] = useState(false);
-    const user = useSelector(loggedInUserSelector);
 
     const dispatch = useAppDispatch();
 
