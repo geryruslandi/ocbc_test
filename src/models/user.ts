@@ -1,14 +1,14 @@
 export interface UserInterface {
-    username: string;
-    accountNumber: string;
+    accountHolder: string;
+    accountNo: string;
 }
 
 export default class User implements UserInterface{
-    username: string;
-    accountNumber: string;
+    accountHolder: string;
+    accountNo: string;
 
-    constructor(username: string, accountNumber: string){
-        this.username = username;
-        this.accountNumber = accountNumber;
+    constructor(accountHolder: string, accountNo: string){
+        this.accountHolder = accountHolder;
+        this.accountNo = accountNo;
     }
 }

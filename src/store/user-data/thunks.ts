@@ -10,8 +10,8 @@ export const loginThunk = createAsyncThunk(
 
         return {
             user: {
-                username: res.data.username,
-                accountNumber: res.data.accountNo
+                accountHolder: res.data.username,
+                accountNo: res.data.accountNo
             },
             token: res.data.token
         };

@@ -18,6 +18,7 @@ export default function Home() {
         dispatch(syncThunk())
     }, [])
 
+
     return (
         <View >
             <Navbar showLogout />
@@ -29,9 +30,9 @@ export default function Home() {
                     </View>
                     <View style={styles.userInfoContainer}>
                         <Text style={styles.userInfoText}>Account No</Text>
-                        <Text style={{...styles.userText, marginBottom: 15}}>{user?.accountNumber}</Text>
+                        <Text style={{...styles.userText, marginBottom: 15}}>{user?.accountNo}</Text>
                         <Text style={styles.userInfoText}>Account Holder</Text>
-                        <Text style={styles.userText}>{user?.username}</Text>
+                        <Text style={styles.userText}>{user?.accountHolder}</Text>
                     </View>
                 </View>
             </View>
@@ -88,7 +89,3 @@ const styles = StyleSheet.create({
         marginTop: 20
     },
 });
-
-function Logout() {
-
-}

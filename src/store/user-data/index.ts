@@ -29,3 +29,5 @@ export const loggedInUserSlice = createSlice({
         });
     },
 });
+
+export const { logout } = loggedInUserSlice.actions;

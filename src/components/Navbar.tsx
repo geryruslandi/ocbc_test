@@ -1,11 +1,32 @@
-import { View, Text, StyleSheet, Dimensions } from 'react-native'
+import { View, Text, StyleSheet, Dimensions, Alert } from 'react-native'
 import React from 'react'
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { logout } from '../store/user-data';
+import { useAppDispatch } from '../hooks';
+
 
 const width = Dimensions.get('window').width;
 
 export default function Navbar(props: NavbarProps) {
+
+
+    const dispatch = useAppDispatch();
+
+    function logoutFunction() {
+        Alert.alert(
+            "Are you sure",
+            "You will need to logging in again if you click ok",
+            [
+                {
+                  text: "Cancel",
+                  style: "cancel"
+                },
+                { text: "OK", onPress: () => dispatch(logout()) }
+            ]
+        )
+    }
+
     return (
         <View style={style.container}>
 
@@ -18,7 +39,7 @@ export default function Navbar(props: NavbarProps) {
             </View>
             <View style={style.rigthSubContainer}>
                 { props.showLogout &&
-                    <TouchableOpacity style={style.logoutContainer}>
+                    <TouchableOpacity style={style.logoutContainer} onPress={logoutFunction}>
                         <Icon name="logout" size={15} style={{fontWeight: 'bold', marginRight: 5}}/>
                         <Text style={style.logoutText}>Logout</Text>
                     </TouchableOpacity>

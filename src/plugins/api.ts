@@ -17,6 +17,10 @@ class Api{
     getBalance() {
         return this.axios.get('/balance')
     }
+
+    getTransactionHistory() {
+        return this.axios.get('/transactions')
+    }
 }
 
 export default new Api(new Axios(Config.BASE_API_URL))
