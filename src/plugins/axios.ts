@@ -1,4 +1,5 @@
-import axios, { AxiosInstance } from "axios";
+import axios, { AxiosInstance, AxiosRequestHeaders } from "axios";
+import { ToastAndroid } from "react-native";
 
 export default class Axios{
 
@@ -8,9 +9,14 @@ export default class Axios{
         this.axiosClient = axios.create({
             baseURL: baseUrl
         });
+
+        this.axiosClient.interceptors.response.use(
+            (response) => {return response},
+            (error) => {ToastAndroid.show(error.response.data.error, ToastAndroid.LONG)}
+        )
     }
 
-    setHeaders(headers: any) {
+    setHeaders(headers: AxiosRequestHeaders) {
         this.axiosClient.interceptors.request.use((config) => {
             config.headers = headers;
         });

@@ -2,12 +2,12 @@ import React, { useState } from 'react';
 import { Image, StyleSheet, Text, View, Dimensions } from 'react-native';
 import { Button, TextInput } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import auth from '../services/auth';
 
 import { useAppDispatch } from '../hooks'
 import { loginThunk } from '../store/login-data/thunks';
 
-const windowWidth = Dimensions.get('window').width;
+const windowWidth = Dimensions.get('screen').width;
+const windowHeight = Dimensions.get('screen').height;
 
 export default function Login() {
 
@@ -42,7 +42,7 @@ export default function Login() {
                         onChangeText={setUsername}
                         selectionColor="#EF393B"
                         theme={{colors: {primary: '#EF393B'}}}
-                        style={{...styles.input, marginBottom: 10}}/>
+                        style={{...styles.input, marginBottom: 15}}/>
                     <TextInput
                         label="password"
                         theme={{colors: {primary: '#EF393B'}}}
@@ -90,7 +90,7 @@ const styles = StyleSheet.create({
         marginRight: 10,
     },
     inputContainer: {
-        marginVertical: 80
+        flex:1
     },
     input: {
         shadowColor: 'black',

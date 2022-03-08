@@ -1,8 +1,8 @@
 import { createSelector } from "@reduxjs/toolkit";
-import { LoggedInUserState } from ".";
+import { RootState } from "..";
 import User from "../../models/user";
 
-export const loggedInUser = createSelector(
-    (state: LoggedInUserState) => state.profile,
+export const loggedInUserSelector = createSelector(
+    (state: RootState) => state.loggedInUser.profile,
     (profile) => profile != null ? new User(profile.username, profile.accountNumber) : null
 )

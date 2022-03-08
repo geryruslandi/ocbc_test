@@ -10,6 +10,10 @@ class Auth{
             throw new Error(res.data.error)
         }
 
+        api.axios.setHeaders({
+            Authorization: res.data.token
+        })
+
         return new User(res.data.username as string, res.data.accountNo as string)
     }
 

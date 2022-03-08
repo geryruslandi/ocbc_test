@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { ToastAndroid } from 'react-native';
 import { UserInterface } from "../../models/user";
 import { loginThunk } from "./thunks";
 import { reducers } from "./reducers";
@@ -24,8 +23,5 @@ export const loggedInUserSlice = createSlice({
 
             console.log(state)
         });
-        builder.addCase(loginThunk.rejected, (state, action) => {
-            ToastAndroid.show("Credential failed", ToastAndroid.LONG);
-        })
     },
 });
