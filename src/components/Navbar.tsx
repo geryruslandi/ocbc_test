@@ -56,7 +56,8 @@ const style = StyleSheet.create({
     logoutText: {
         fontSize: 15,
         fontWeight: '900',
-        color: 'black'
+        color: 'black',
+        fontFamily: 'Ubuntu-Regular'
     },
     logoutContainer: {
         display: 'flex',
