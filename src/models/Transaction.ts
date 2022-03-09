@@ -6,8 +6,14 @@ export interface TransactionInterface {
     amount: number,
     transactionDate: string,
     description: string | null,
-    transactionType: string,
-    sender: UserInterface
+    transactionType: TransactionType,
+    sender?: UserInterface,
+    receipient?: UserInterface,
+}
+
+export enum TransactionType{
+    TRANSFER = 'transfer',
+    RECEIVED = 'received',
 }
 
 export default class Transaction implements TransactionInterface {
@@ -15,16 +21,22 @@ export default class Transaction implements TransactionInterface {
     amount: number;
     transactionDate: string;
     description: string | null;
-    transactionType: string;
-    sender: User;
+    transactionType: TransactionType;
+    sender?: User;
+    receipient?: UserInterface;
 
     constructor(prop: TransactionInterface){
-        console.log(prop)
         this.transactionId = prop.transactionId;
         this.amount = prop.amount;
         this.transactionDate = prop.transactionDate;
         this.transactionType = prop.transactionType;
-        this.sender = new User(prop.sender.accountHolder, prop.sender.accountNo);
+
+        if(prop.transactionType == TransactionType.TRANSFER) {
+            this.receipient = new User(prop.receipient?.accountHolder as string, prop.receipient?.accountNo as string);
+        }
+        else if(prop.transactionType == TransactionType.RECEIVED){
+            this.sender = new User(prop.sender?.accountHolder as string, prop.sender?.accountNo as string);
+        }
         this.description = prop.description || null;
     }
 
@@ -34,5 +46,11 @@ export default class Transaction implements TransactionInterface {
 
     public get startDate() {
         return this.parsedDate.clone().startOf('day')
+    }
+
+    getDelegatedUser() : User {
+        return this.transactionType == TransactionType.TRANSFER
+            ? this.receipient as User
+            : this.sender as User
     }
 }

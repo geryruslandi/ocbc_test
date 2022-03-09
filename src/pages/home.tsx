@@ -3,21 +3,23 @@ import { StyleSheet, View, Dimensions } from 'react-native'
 import { useAppDispatch, useAppSelector } from '../hooks'
 import { syncThunk } from '../store/user-data/thunks';
 import Navbar from '../components/Navbar'
-import { Text } from 'react-native-paper';
+import { Button, Text } from 'react-native-paper';
 import { groupedTransactionsPerDay, loggedInUserSelector } from '../store/user-data/selector';
 import { UserInterface } from '../models/User';
 import DailyTransactionCard from '../components/DailyTransactionCard';
 import moment from 'moment';
 import { ScrollView } from 'react-native-gesture-handler';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { RootStackParamList } from '../AppRoute';
 
 const width = Dimensions.get('window').width;
 
-export default function Home() {
+export default function Home(props: PropsType) {
 
     const dispatch = useAppDispatch();
     const userBalance = useAppSelector(state => state.userData.balance)
     const user = useAppSelector((state) => loggedInUserSelector(state.userData.profile as UserInterface));
-    const transactions = useAppSelector((state) => groupedTransactionsPerDay(state.userData.transactions))
+    const transactions = useAppSelector((state) => groupedTransactionsPerDay(state.userData.transactions));
 
     useEffect(() => {
         dispatch(syncThunk())
@@ -48,15 +50,24 @@ export default function Home() {
                     {transactionElements}
                 </View>
             </ScrollView>
+            <View style={styles.makeTransferContainer}>
+                <Button
+                    style={{marginTop: 10}}
+                    color="#EE4645"
+                    mode="contained"
+                    onPress={() => props.navigation.navigate('Transfer')}
+                >
+                    Make Transfer
+                </Button>
+            </View>
         </View>
     )
 }
 
 const styles = StyleSheet.create({
     container: {
-        marginBottom: 55,
         flex: 1,
-        flexGrow: 1
+        flexGrow: 1,
     },
     userContainer: {
         backgroundColor: "#EE4645",
@@ -110,5 +121,13 @@ const styles = StyleSheet.create({
         fontFamily: 'Ubuntu-Bold',
         fontSize: 15,
         marginBottom: 15
+    },
+    makeTransferContainer: {
+        marginBottom: 30,
+        marginHorizontal: 20,
     }
 });
+
+type PropsType = {
+    navigation : StackNavigationProp<RootStackParamList, 'Home'>;
+}

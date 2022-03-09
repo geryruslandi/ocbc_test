@@ -1,7 +1,7 @@
 import { View, Text, StyleSheet } from 'react-native'
 import React from 'react'
 import { Moment } from "moment";
-import Transaction from '../models/Transaction';
+import Transaction, { TransactionType } from '../models/Transaction';
 
 
 export default function DailyTransactionCard(props: DailyTransactionCardInterface) {
@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
         fontSize: 14
     },
     dayContainer: {
-        backgroundColor: 'black',
+        backgroundColor: '#EE4645',
         paddingVertical: 10,
         borderTopLeftRadius: 20,
         borderTopRightRadius: 20,
@@ -51,14 +51,16 @@ interface DailyTransactionCardInterface {
 }
 
 function TransactionElement(props: {transaction: Transaction}) {
+
+
     return (
         <View style={transactionStyles.container}>
             <View style={transactionStyles.topContainer}>
-                <Text style={transactionStyles.holderText}>{props.transaction.sender.accountHolder}</Text>
+                <Text style={transactionStyles.holderText}>{props.transaction.getDelegatedUser().accountHolder}</Text>
                 <Text style={transactionStyles.amountText}>SGD {props.transaction.amount}</Text>
             </View>
             <View>
-                <Text style={transactionStyles.holderNumber}>{props.transaction.sender.accountNo}</Text>
+                <Text style={transactionStyles.holderNumber}>{props.transaction.getDelegatedUser().accountNo}</Text>
             </View>
         </View>
     );

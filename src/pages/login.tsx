@@ -47,7 +47,7 @@ export default function Login(props: PropsType) {
     }
 
     async function register() {
-        console.log(props.navigation.navigate('Register'))
+        props.navigation.navigate('Register')
     }
 
 

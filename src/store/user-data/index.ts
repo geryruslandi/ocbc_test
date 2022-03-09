@@ -30,6 +30,7 @@ export const loggedInUserSlice = createSlice({
         builder.addCase(syncThunk.fulfilled, (state, action) => {
             state.balance = action.payload.balance;
             state.transactions = action.payload.transactions;
+
         });
         builder.addCase(registerAndLogin.fulfilled, (state, action) => {
             state.profile = action.payload.user;

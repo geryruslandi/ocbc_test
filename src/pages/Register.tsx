@@ -9,9 +9,6 @@ import { useAppDispatch } from '../hooks';
 import { registerAndLogin } from '../store/user-data/thunks';
 import RichTextInput from '../components/login-and-registration/RichTextInput';
 
-const windowWidth = Dimensions.get('window').width;
-
-
 export default function Register(props: PropsType) {
 
     const [username, setUsername] = useState('')
@@ -57,7 +54,7 @@ export default function Register(props: PropsType) {
 
 
     return (
-        <View style={{flex: 1}}>
+        <View style={{flex: 1, paddingHorizontal: 20, backgroundColor: 'white'}}>
             <Navbar showGoBack bgColor='white'/>
             <View style={styles.pageContainer}>
                 <View style={styles.logoContainer}>
@@ -109,7 +106,7 @@ export default function Register(props: PropsType) {
 
 const styles = StyleSheet.create({
     pageContainer: {
-        paddingHorizontal: windowWidth * 0.1,
+        paddingHorizontal: 20,
         display: 'flex',
         backgroundColor: 'white',
         flexGrow: 1

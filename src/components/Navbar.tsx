@@ -69,7 +69,6 @@ const style = StyleSheet.create({
     leftSubContainer: {
         flex: 1,
         justifyContent: 'center',
-        paddingLeft: 20
     },
     middleSubContainer: {
         flex: 1,

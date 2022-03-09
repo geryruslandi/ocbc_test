@@ -18,7 +18,6 @@ export const isSignedInSelector = createSelector(
 export const groupedTransactionsPerDay = createSelector(
     (transactions: TransactionInterface[]) => transactions,
     (transactions) => {
-        console.log(transactions);
 
         const transactionsMapped = transactions
             .filter(transaction => transaction != null)
