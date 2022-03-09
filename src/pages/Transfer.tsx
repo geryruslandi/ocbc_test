@@ -61,18 +61,27 @@ export default function Transfer() {
         }
 
         setLoading(true);
-        await dispatch(submitTransfer({
+        const res = await dispatch(submitTransfer({
             payee: selectedPayee as string,
             amount: parsedAmount,
             description
         }))
+
+        if(res.meta.requestStatus == "rejected") {
+            setNotificationMessage({
+                type: 'error',
+                show: true,
+                message: (res as any).error.message
+            })
+        } else {
+            setNotificationMessage({
+                type: 'success',
+                show: true,
+                message: 'Money sent'
+            })
+        }
         setLoading(false)
 
-        setNotificationMessage({
-            type: 'success',
-            show: true,
-            message: 'Money sent...'
-        })
     }
 
     return (
@@ -90,11 +99,14 @@ export default function Transfer() {
                 </View>
                 <View style={styles.amountContainer}>
                     <Text style={styles.label}>Amount</Text>
-                    <TextInput
-                        keyboardType='phone-pad'
-                        value={amount}
-                        onChangeText={setAmount}
-                        style={styles.amountInput} />
+                    <View style={styles.amountTextInputContainer}>
+                        <Text style={styles.amountCurrency}>SGD</Text>
+                        <TextInput
+                            keyboardType='phone-pad'
+                            value={amount}
+                            onChangeText={setAmount}
+                            style={styles.amountInput} />
+                    </View>
                 </View>
                 <View style={styles.descriptionContainer}>
                     <Text style={styles.label}>Description</Text>
@@ -164,7 +176,6 @@ const styles = StyleSheet.create({
         fontFamily: 'Ubuntu-Bold',
     },
     amountInput: {
-        marginHorizontal: 15,
         fontFamily: 'Ubuntu-Medium',
     },
     amountContainer: {
@@ -174,6 +185,19 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         marginBottom: 10,
         elevation: 5
+    },
+    amountCurrency: {
+        fontFamily: 'Ubuntu-Bold',
+        fontSize: 13,
+        textAlignVertical: 'center',
+        marginLeft: 15,
+        marginRight: 8
+    },
+    amountTextInputContainer: {
+        display: 'flex',
+        flexDirection: 'row',
+        alignContent: 'center',
+        overflow: 'hidden'
     },
     descriptionInput: {
         marginHorizontal: 15,

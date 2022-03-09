@@ -60,12 +60,14 @@ export const registerAndLogin = createAsyncThunk(
 export const submitTransfer = createAsyncThunk(
     'userData/transfer',
     async(data: {payee: string, amount: number, description: string}) => {
-        const res = await Api.submitTransfer(data.payee, data.amount, data.description)
+        try {
 
-        if(res.status != 200) {
-            throw new Error(res.data.error)
+            await Api.submitTransfer(data.payee, data.amount, data.description)
+
+            store.dispatch(syncThunk());
+        } catch(err) {
+            throw new Error(err.response.data.error);
+
         }
-
-        store.dispatch(syncThunk());
     }
 )
