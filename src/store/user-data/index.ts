@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { UserInterface } from "../../models/User";
-import { loginThunk, syncThunk } from "./thunks";
+import { loginThunk, registerAndLogin, syncThunk } from "./thunks";
 import { reducers } from "./reducers";
 import { TransactionInterface } from "../../models/Transaction";
 
@@ -31,6 +31,10 @@ export const loggedInUserSlice = createSlice({
             state.balance = action.payload.balance;
             state.transactions = action.payload.transactions;
         });
+        builder.addCase(registerAndLogin.fulfilled, (state, action) => {
+            state.profile = action.payload.user;
+            state.token = action.payload.token;
+        })
     },
 });
 

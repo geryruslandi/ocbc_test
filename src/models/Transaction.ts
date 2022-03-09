@@ -7,7 +7,7 @@ export interface TransactionInterface {
     transactionDate: string,
     description: string | null,
     transactionType: string,
-    receipient: UserInterface
+    sender: UserInterface
 }
 
 export default class Transaction implements TransactionInterface {
@@ -16,14 +16,15 @@ export default class Transaction implements TransactionInterface {
     transactionDate: string;
     description: string | null;
     transactionType: string;
-    receipient: User;
+    sender: User;
 
     constructor(prop: TransactionInterface){
+        console.log(prop)
         this.transactionId = prop.transactionId;
         this.amount = prop.amount;
         this.transactionDate = prop.transactionDate;
         this.transactionType = prop.transactionType;
-        this.receipient = new User(prop.receipient.accountHolder, prop.receipient.accountNo);
+        this.sender = new User(prop.sender.accountHolder, prop.sender.accountNo);
         this.description = prop.description || null;
     }
 

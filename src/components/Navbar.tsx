@@ -4,12 +4,13 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { logout } from '../store/user-data';
 import { useAppDispatch } from '../hooks';
+import FontAwesome from 'react-native-vector-icons/FontAwesome5';
+import { getNavigationRef } from '../AppRoute';
 
 
 const width = Dimensions.get('window').width;
 
 export default function Navbar(props: NavbarProps) {
-
 
     const dispatch = useAppDispatch();
 
@@ -27,10 +28,19 @@ export default function Navbar(props: NavbarProps) {
         )
     }
 
+    function goBack() {
+        getNavigationRef()?.goBack();
+    }
+
     return (
-        <View style={style.container}>
+        <View style={{...style.container, backgroundColor: props.bgColor || 'transparent'}}>
 
             <View style={style.leftSubContainer}>
+                { props.showGoBack &&
+                    <TouchableOpacity style={style.goBackContainer} onPress={goBack}>
+                        <FontAwesome name="chevron-left" size={25} style={{fontWeight: 'bold', marginRight: 5}}/>
+                    </TouchableOpacity>
+                }
             </View>
             <View style={style.middleSubContainer}>
                 { props.title &&
@@ -57,7 +67,9 @@ const style = StyleSheet.create({
         flexDirection: 'row',
     },
     leftSubContainer: {
-        flex: 1
+        flex: 1,
+        justifyContent: 'center',
+        paddingLeft: 20
     },
     middleSubContainer: {
         flex: 1,
@@ -85,10 +97,16 @@ const style = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
+    },
+    goBackContainer: {
+        display: 'flex',
+        flexDirection: 'row'
     }
 })
 
 type NavbarProps = {
-    title?: String,
-    showLogout?: boolean
+    title?: string,
+    showLogout?: boolean,
+    showGoBack?: boolean,
+    bgColor?: string
 }

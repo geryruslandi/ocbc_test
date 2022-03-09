@@ -1,35 +1,49 @@
 import React from 'react'
 
 import { isSignedInSelector } from './store/user-data/selector';
-import { NavigationContainer } from '@react-navigation/native';
+import { createNavigationContainerRef, NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
 import Login from './pages/Login';
 import Home from './pages/Home';
+import Register from './pages/Register';
 import { useAppSelector } from './hooks';
 import { UserInterface } from './models/User';
 
-const Root = createStackNavigator()
+export type RootStackParamList = {
+    Home: undefined,
+    Login: undefined,
+    Register: undefined,
+}
+
+const navigationRef = createNavigationContainerRef()
+
+const Root = createStackNavigator<RootStackParamList>()
 
 export default function AppRoute() {
+
 
     const isSignedIn = useAppSelector(state => isSignedInSelector(state.userData.profile as UserInterface));
 
     return (
-        <NavigationContainer>
-                { isSignedIn &&
-                    <Root.Navigator     screenOptions={{
-                        headerStyle: { elevation: 0 },
-                        cardStyle: { backgroundColor: '#f7f7f7' }
-                    }}>
-                        <Root.Screen options={{ headerShown: false }} name="Home" component={Home} />
-                    </Root.Navigator>
-                }
-                { !isSignedIn &&
-                    <Root.Navigator>
-                        <Root.Screen options={{ headerShown: false }} name="Login" component={Login} />
-                    </Root.Navigator>
-                }
+        <NavigationContainer ref={navigationRef}>
+            { isSignedIn &&
+                <Root.Navigator screenOptions={{ headerStyle: { elevation: 0 }, cardStyle: { backgroundColor: '#f7f7f7' } }}>
+                    <Root.Screen options={{ headerShown: false }} name="Home" component={Home} />
+                </Root.Navigator>
+            }
+            { !isSignedIn &&
+                <Root.Navigator>
+                    <Root.Screen options={{ headerShown: false }} name="Login" component={Login} />
+                    <Root.Screen options={{ headerShown: false }} name="Register" component={Register} />
+                </Root.Navigator>
+            }
         </NavigationContainer>
     )
+}
+
+export function getNavigationRef(){
+    return navigationRef.isReady()
+        ? navigationRef
+        : null;
 }

@@ -28,7 +28,7 @@ export default function Home() {
     })
 
     return (
-        <View>
+        <View style={{flex: 1}}>
             <Navbar showLogout />
             <ScrollView style={styles.container}>
                 <View style={styles.userContainer}>
@@ -54,7 +54,9 @@ export default function Home() {
 
 const styles = StyleSheet.create({
     container: {
-        marginBottom: 55
+        marginBottom: 55,
+        flex: 1,
+        flexGrow: 1
     },
     userContainer: {
         backgroundColor: "#EE4645",

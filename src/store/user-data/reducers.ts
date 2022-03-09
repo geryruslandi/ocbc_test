@@ -7,6 +7,7 @@ export const reducers = {
         console.log('logout reducer');
 
         state.profile = null;
-        state.token = null
+        state.token = null;
+        state.transactions = [];
     }
 }

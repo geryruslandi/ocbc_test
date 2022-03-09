@@ -14,6 +14,10 @@ class Api{
         })
     }
 
+    register(username: string, password: string) {
+        return this.axios.post('/register', {username, password});
+    }
+
     getBalance() {
         return this.axios.get('/balance')
     }

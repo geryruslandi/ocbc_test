@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         backgroundColor: 'white',
         marginBottom: 10,
-        elevation: 20
+        elevation: 5
     },
     dayTitle: {
         color: 'white',
@@ -54,11 +54,11 @@ function TransactionElement(props: {transaction: Transaction}) {
     return (
         <View style={transactionStyles.container}>
             <View style={transactionStyles.topContainer}>
-                <Text style={transactionStyles.holderText}>{props.transaction.receipient.accountHolder}</Text>
+                <Text style={transactionStyles.holderText}>{props.transaction.sender.accountHolder}</Text>
                 <Text style={transactionStyles.amountText}>SGD {props.transaction.amount}</Text>
             </View>
             <View>
-                <Text style={transactionStyles.holderNumber}>{props.transaction.receipient.accountNo}</Text>
+                <Text style={transactionStyles.holderNumber}>{props.transaction.sender.accountNo}</Text>
             </View>
         </View>
     );

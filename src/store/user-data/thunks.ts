@@ -32,3 +32,24 @@ export const syncThunk = createAsyncThunk(
         }
     }
 )
+
+export const registerAndLogin = createAsyncThunk(
+    'userData/registerAndLogin',
+    async (data: {username: string, password: string}) => {
+        const res = await Api.register(data.username, data.password);
+
+        if(res.status != 200) {
+            throw new Error(res.data.error)
+        }
+
+        const resLogin = await Api.login(data.username, data.password);
+
+        return {
+            user: {
+                accountHolder: resLogin.data.username,
+                accountNo: resLogin.data.accountNo
+            },
+            token: resLogin.data.token
+        };
+    }
+)
