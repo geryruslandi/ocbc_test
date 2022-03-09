@@ -4,9 +4,7 @@ import api from "../plugins/Api";
 class UserSync {
 
     init(userToken: string) {
-        api.axios.setHeaders({
-            Authorization: userToken
-        })
+        api.axios.setToken(userToken)
     }
 
     async getUserBalance() : Promise<number> {

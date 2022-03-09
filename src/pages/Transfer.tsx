@@ -18,7 +18,7 @@ export default function Transfer() {
     const [notificationMessage, setNotificationMessage] = useState({
         message: 'test',
         type: 'success',
-        show: true
+        show: false
     })
     const [loading, setLoading] = useState(false)
 
