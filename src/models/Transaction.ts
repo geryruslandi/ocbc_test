@@ -30,4 +30,8 @@ export default class Transaction implements TransactionInterface {
     public get parsedDate() {
         return moment(this.transactionDate);
     }
+
+    public get startDate() {
+        return this.parsedDate.clone().startOf('day')
+    }
 }

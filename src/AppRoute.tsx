@@ -6,20 +6,21 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 import Login from './pages/Login';
 import Home from './pages/Home';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from './hooks';
+import { UserInterface } from './models/User';
 
 const Root = createStackNavigator()
 
 export default function AppRoute() {
 
-    const isSignedIn = useSelector(isSignedInSelector);
+    const isSignedIn = useAppSelector(state => isSignedInSelector(state.userData.profile as UserInterface));
 
     return (
         <NavigationContainer>
                 { isSignedIn &&
                     <Root.Navigator     screenOptions={{
                         headerStyle: { elevation: 0 },
-                        cardStyle: { backgroundColor: '#fff' }
+                        cardStyle: { backgroundColor: '#f7f7f7' }
                     }}>
                         <Root.Screen options={{ headerShown: false }} name="Home" component={Home} />
                     </Root.Navigator>

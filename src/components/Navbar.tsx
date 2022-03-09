@@ -51,7 +51,7 @@ export default function Navbar(props: NavbarProps) {
 
 const style = StyleSheet.create({
     container: {
-        height: 40,
+        height: 55,
         width,
         display: 'flex',
         flexDirection: 'row',

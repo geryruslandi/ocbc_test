@@ -2,17 +2,20 @@ import { createSlice } from "@reduxjs/toolkit";
 import { UserInterface } from "../../models/User";
 import { loginThunk, syncThunk } from "./thunks";
 import { reducers } from "./reducers";
+import { TransactionInterface } from "../../models/Transaction";
 
 export interface LoggedInUserState {
     profile: UserInterface | null,
     token: string | null,
-    balance: number
+    balance: number,
+    transactions: Array<TransactionInterface>
 }
 
 const initialState: LoggedInUserState = {
     profile: null,
     token: null,
-    balance: 0
+    balance: 0,
+    transactions: []
 }
 
 export const loggedInUserSlice = createSlice({
@@ -25,7 +28,8 @@ export const loggedInUserSlice = createSlice({
             state.token = action.payload.token;
         });
         builder.addCase(syncThunk.fulfilled, (state, action) => {
-            state.balance = action.payload.balance
+            state.balance = action.payload.balance;
+            state.transactions = action.payload.transactions;
         });
     },
 });

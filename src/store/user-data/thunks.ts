@@ -24,8 +24,11 @@ export const syncThunk = createAsyncThunk(
     async(arg, { getState }) => {
         const state: RootState = getState() as any as RootState;
         UserSync.init(state.userData.token as string)
+
+        const [balance, transactions] = await Promise.all([UserSync.getUserBalance(), UserSync.getUserTransactionHistory()])
         return {
-            balance: await UserSync.getUserBalance()
+            balance,
+            transactions
         }
     }
 )

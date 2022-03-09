@@ -4,7 +4,11 @@ import { useAppDispatch, useAppSelector } from '../hooks'
 import { syncThunk } from '../store/user-data/thunks';
 import Navbar from '../components/Navbar'
 import { Text } from 'react-native-paper';
-import { loggedInUserSelector } from '../store/user-data/selector';
+import { groupedTransactionsPerDay, loggedInUserSelector } from '../store/user-data/selector';
+import { UserInterface } from '../models/User';
+import DailyTransactionCard from '../components/DailyTransactionCard';
+import moment from 'moment';
+import { ScrollView } from 'react-native-gesture-handler';
 
 const width = Dimensions.get('window').width;
 
@@ -12,17 +16,21 @@ export default function Home() {
 
     const dispatch = useAppDispatch();
     const userBalance = useAppSelector(state => state.userData.balance)
-    const user = useAppSelector(loggedInUserSelector);
+    const user = useAppSelector((state) => loggedInUserSelector(state.userData.profile as UserInterface));
+    const transactions = useAppSelector((state) => groupedTransactionsPerDay(state.userData.transactions))
 
     useEffect(() => {
         dispatch(syncThunk())
     }, [])
 
+    const transactionElements = Object.keys(transactions).map(key => {
+        return <DailyTransactionCard key={key} day={moment(key)} transactions={transactions[key]}/>
+    })
 
     return (
-        <View >
+        <View>
             <Navbar showLogout />
-            <View style={styles.container}>
+            <ScrollView style={styles.container}>
                 <View style={styles.userContainer}>
                     <View style={styles.balanceContainer}>
                         <Text style={styles.balanceInfoText}>You Have</Text>
@@ -35,14 +43,18 @@ export default function Home() {
                         <Text style={styles.userText}>{user?.accountHolder}</Text>
                     </View>
                 </View>
-            </View>
+                <View style={styles.transactionHistoryContainer}>
+                    <Text style={styles.transactionHistoryTitle}>Your transaction history</Text>
+                    {transactionElements}
+                </View>
+            </ScrollView>
         </View>
     )
 }
 
 const styles = StyleSheet.create({
     container: {
-        marginTop:35,
+        marginBottom: 55
     },
     userContainer: {
         backgroundColor: "#EE4645",
@@ -88,4 +100,13 @@ const styles = StyleSheet.create({
         marginLeft: 20,
         marginTop: 20
     },
+    transactionHistoryContainer: {
+        marginTop: 20,
+        marginHorizontal: 20
+    },
+    transactionHistoryTitle: {
+        fontFamily: 'Ubuntu-Bold',
+        fontSize: 15,
+        marginBottom: 15
+    }
 });

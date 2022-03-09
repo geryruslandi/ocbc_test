@@ -1,4 +1,4 @@
-import Transaction, { TransactionInterface } from "../models/Transaction";
+import { TransactionInterface } from "../models/Transaction";
 import api from "../plugins/Api";
 
 class UserSync {
@@ -19,16 +19,14 @@ class UserSync {
         return res.data.balance;
     }
 
-    async getUserTransactionHistory(): Promise<Array<Transaction>>{
+    async getUserTransactionHistory(): Promise<Array<TransactionInterface>>{
         const res = await api.getTransactionHistory();
 
         if(res.status != 200) {
             throw new Error(res.data.error)
         }
 
-        return res.data.data.map((item: TransactionInterface) =>{
-            return new Transaction(item)
-        })
+        return res.data.data;
     }
 }
 
