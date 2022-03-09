@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import UserSync from "../../services/UserSync";
-import { RootState } from "..";
+import store, { RootState } from "..";
 import Api from "../../plugins/Api";
 
 export const loginThunk = createAsyncThunk(
@@ -26,6 +26,7 @@ export const syncThunk = createAsyncThunk(
         UserSync.init(state.userData.token as string)
 
         const [balance, transactions] = await Promise.all([UserSync.getUserBalance(), UserSync.getUserTransactionHistory()])
+
         return {
             balance,
             transactions
@@ -51,5 +52,18 @@ export const registerAndLogin = createAsyncThunk(
             },
             token: resLogin.data.token
         };
+    }
+)
+
+export const submitTransfer = createAsyncThunk(
+    'userData/transfer',
+    async(data: {payee: string, amount: number, description: string}) => {
+        const res = await Api.submitTransfer(data.payee, data.amount, data.description)
+
+        if(res.status != 200) {
+            throw new Error(res.data.error)
+        }
+
+        store.dispatch(syncThunk());
     }
 )

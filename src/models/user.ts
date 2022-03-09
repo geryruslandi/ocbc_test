@@ -1,12 +1,12 @@
 export interface UserInterface {
-    accountHolder: string;
+    accountHolder?: string;
     accountNo: string;
     id?: string,
     name?: string
 }
 
 export default class User implements UserInterface{
-    accountHolder: string;
+    accountHolder?: string;
     accountNo: string;
     id?: string;
     name?: string;

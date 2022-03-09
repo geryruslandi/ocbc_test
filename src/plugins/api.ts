@@ -29,6 +29,14 @@ class Api{
     getPayees() {
         return this.axios.get('/payees')
     }
+
+    submitTransfer(payee: string, amount: number, description: string) {
+        return this.axios.post('/transfer', {
+            receipientAccountNo: payee,
+            amount,
+            description
+        })
+    }
 }
 
 export default new Api(new Axios(Config.BASE_API_URL))

@@ -20,6 +20,8 @@ export default class Axios{
     }
 
     setHeaders(headers: AxiosRequestHeaders) {
+        console.log(headers);
+
         this.axiosClient.interceptors.request.use((config) => {
             config.headers = headers;
             return config;
