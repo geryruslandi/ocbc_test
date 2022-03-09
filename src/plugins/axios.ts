@@ -4,6 +4,7 @@ import { ToastAndroid } from "react-native";
 export default class Axios{
 
     axiosClient: AxiosInstance;
+    token?: string
 
     constructor(baseUrl: string){
         this.axiosClient = axios.create({
@@ -19,18 +20,24 @@ export default class Axios{
         )
     }
 
-    setHeaders(headers: AxiosRequestHeaders) {
-        this.axiosClient.interceptors.request.use((config) => {
-            config.headers = headers;
-            return config;
-        });
+    setToken(token: string) {
+        this.token = token
+        return this;
     }
 
     get(path: string){
-        return this.axiosClient.get(path);
+        return this.axiosClient.get(path, {
+            headers: this.generateHeader()
+        });
     }
 
     post(path: string, body: any){
-        return this.axiosClient.post(path, body);
+        return this.axiosClient.post(path, body, {
+            headers: this.generateHeader()
+        });
+    }
+
+    generateHeader(): {Authorization: string} | {}{
+        return this.token ? {Authorization : (this.token as string)} : {}
     }
 }
