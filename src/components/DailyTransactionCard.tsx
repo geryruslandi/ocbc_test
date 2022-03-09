@@ -57,7 +57,14 @@ function TransactionElement(props: {transaction: Transaction}) {
         <View style={transactionStyles.container}>
             <View style={transactionStyles.topContainer}>
                 <Text style={transactionStyles.holderText}>{props.transaction.getDelegatedUser().accountHolder}</Text>
-                <Text style={transactionStyles.amountText}>SGD {props.transaction.amount}</Text>
+                {
+                    props.transaction.transactionType == TransactionType.RECEIVED &&
+                        <Text style={transactionStyles.amountText}>SGD {props.transaction.amount}</Text>
+                }
+                {
+                    props.transaction.transactionType == TransactionType.TRANSFER &&
+                        <Text style={{...transactionStyles.amountText, color: 'grey'}}>SGD - {props.transaction.amount}</Text>
+                }
             </View>
             <View>
                 <Text style={transactionStyles.holderNumber}>{props.transaction.getDelegatedUser().accountNo}</Text>

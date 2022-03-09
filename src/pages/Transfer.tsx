@@ -1,14 +1,19 @@
-import { View, Text, StyleSheet } from 'react-native'
-import React from 'react'
+import { View, Text, StyleSheet } from 'react-native';
+import React, { useState } from 'react';
+
 import Navbar from '../components/Navbar';
+import {Picker} from '@react-native-picker/picker';
 
 export default function Transfer() {
+
+    const [payees, setPayees] = useState([])
+
     return (
         <View style={styles.container}>
             <Navbar showGoBack />
             <View style={styles.pageContainer}>
                 <Text style={styles.transferText}>Transfer</Text>
-                
+
             </View>
         </View>
     )
