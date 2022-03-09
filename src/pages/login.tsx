@@ -8,6 +8,7 @@ import { useAppDispatch } from '../hooks'
 import { loginThunk } from '../store/user-data/thunks';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../AppRoute';
+import RichTextInput from '../components/login-and-registration/RichTextInput';
 
 const windowWidth = Dimensions.get('screen').width;
 
@@ -16,12 +17,29 @@ export default function Login(props: PropsType) {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [loginButtonLoading, setLoginButtonLoading] = useState(false);
+    const [errors, setErrors] = useState({
+        username: '',
+        password: ''
+    })
 
     const dispatch = useAppDispatch();
 
     async function login() {
 
         if(loginButtonLoading) return;
+
+        const newErrors = errors;
+
+        if(username == '') newErrors.username = "Username is required"
+        else newErrors.username = "";
+
+        if(password == '') newErrors.password = "Password is required"
+        else newErrors.password = "";
+
+        setErrors({...newErrors})
+
+        if(username == '' || password == '') return;
+
 
         setLoginButtonLoading(true);
         await dispatch(loginThunk({username, password}))
@@ -41,20 +59,21 @@ export default function Login(props: PropsType) {
             </View>
             <View style={styles.inputContainer}>
                 <View style={{marginBottom: 30}}>
-                    <TextInput
-                        label="Username"
+                    <RichTextInput
+                        placeholder='Username'
+                        error={errors.username}
                         value={username}
-                        onChangeText={setUsername}
-                        selectionColor="#EF393B"
-                        theme={{colors: {primary: '#EF393B'}}}
-                        style={{...styles.input, marginBottom: 15}}/>
-                    <TextInput
-                        label="password"
-                        theme={{colors: {primary: '#EF393B'}}}
+                        onChange={setUsername}
+                        style={{marginBottom: 10}}
+                    />
+                    <RichTextInput
+                        placeholder='Password'
+                        error={errors.password}
                         value={password}
                         secureTextEntry
-                        onChangeText={setPassword}
-                        style={styles.input}/>
+                        onChange={setPassword}
+                        style={{marginBottom: 5}}
+                    />
                 </View>
                 <Button
                     loading={loginButtonLoading}
@@ -107,13 +126,6 @@ const styles = StyleSheet.create({
     inputContainer: {
         flex:1
     },
-    input: {
-        shadowColor: 'black',
-        shadowOffset: {width: 3, height: 5},
-        shadowOpacity: 0.2,
-        elevation: 1,
-        backgroundColor: 'white',
-    }
 })
 
 type PropsType = {
