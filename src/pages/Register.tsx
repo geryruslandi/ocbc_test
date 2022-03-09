@@ -7,7 +7,6 @@ import { RootStackParamList } from '../AppRoute';
 import Navbar from '../components/Navbar';
 import { useAppDispatch } from '../hooks';
 import { registerAndLogin } from '../store/user-data/thunks';
-import { ScrollView } from 'react-native-gesture-handler';
 import RichTextInput from '../components/login-and-registration/RichTextInput';
 
 const windowWidth = Dimensions.get('window').width;
@@ -45,6 +44,8 @@ export default function Register(props: PropsType) {
 
         if(passwordConfirmation != password) newErrors.passwordConfirmation = "Password Confirmation must be same with Password"
         else newErrors.passwordConfirmation = "";
+
+        setErrors({...newErrors})
 
         if(newErrors.password != '' || newErrors.passwordConfirmation != '' || newErrors.username != '') return;
 
