@@ -7,5 +7,6 @@ export const reducers = {
         state.profile = null;
         state.token = null;
         state.transactions = [];
+        state.balance = 0;
     }
 }

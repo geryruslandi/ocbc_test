@@ -23,6 +23,8 @@ export const syncThunk = createAsyncThunk(
     'userData/sync',
     async(arg, { getState }) => {
         const state: RootState = getState() as any as RootState;
+        // TODO
+        // somehow frequently this code didnt change the interceptor's header
         UserSync.init(state.userData.token as string)
 
         const [balance, transactions] = await Promise.all([UserSync.getUserBalance(), UserSync.getUserTransactionHistory()])
