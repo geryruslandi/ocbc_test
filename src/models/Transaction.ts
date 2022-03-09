@@ -32,10 +32,10 @@ export default class Transaction implements TransactionInterface {
         this.transactionType = prop.transactionType;
 
         if(prop.transactionType == TransactionType.TRANSFER) {
-            this.receipient = new User(prop.receipient?.accountHolder as string, prop.receipient?.accountNo as string);
+            this.receipient = new User(prop.receipient as UserInterface);
         }
         else if(prop.transactionType == TransactionType.RECEIVED){
-            this.sender = new User(prop.sender?.accountHolder as string, prop.sender?.accountNo as string);
+            this.sender = new User(prop.sender as UserInterface);
         }
         this.description = prop.description || null;
     }

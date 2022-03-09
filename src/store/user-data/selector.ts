@@ -7,7 +7,7 @@ import User, { UserInterface } from "../../models/User";
 
 export const loggedInUserSelector = createSelector(
     (profile: UserInterface) => profile,
-    (profile) => profile != null ? new User(profile.accountHolder, profile.accountNo) : null
+    (profile) => profile != null ? new User(profile) : null
 )
 
 export const isSignedInSelector = createSelector(
