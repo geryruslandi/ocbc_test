@@ -1,6 +1,4 @@
-import axios, { AxiosInstance, AxiosRequestHeaders } from "axios";
-import { ToastAndroid } from "react-native";
-
+import axios, { AxiosInstance } from "axios";
 export default class Axios{
 
     axiosClient: AxiosInstance;
@@ -10,19 +8,10 @@ export default class Axios{
         this.axiosClient = axios.create({
             baseURL: baseUrl
         });
-
-        this.axiosClient.interceptors.response.use(
-            (response) => response,
-            (error) => {
-                ToastAndroid.show(error.response.data.error, ToastAndroid.LONG)
-                return Promise.reject(error)
-            }
-        )
     }
 
     setToken(token: string) {
         this.token = token
-        return this;
     }
 
     get(path: string){
