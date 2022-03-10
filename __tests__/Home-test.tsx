@@ -3,7 +3,6 @@ import React from 'react';
 import { render, fireEvent, waitFor, waitForElementToBeRemoved, RenderAPI } from '@testing-library/react-native';
 import { Provider } from 'react-redux';
 import AppStore from '../src/store';
-import { act } from 'react-test-renderer';
 import { loggedInUserSlice } from '../src/store/user-data';
 import Home from '../src/pages/Home';
 import Api from '../src/plugins/Api';
@@ -20,15 +19,15 @@ jest.mock('../src/plugins/Api')
 
 describe("Home page test", () => {
 
-    it("will show correct username", async () => {
 
-
+    beforeEach(() => {
         AppStore.dispatch(loggedInUserSlice.actions.setUser({
             accountHolder: 'gery',
             accountNo: '123123'
         }))
+    })
 
-        jest.spyOn(global.console, 'log')
+    it("will show correct username", async () => {
 
 
         const renderEl = render(
@@ -59,11 +58,6 @@ describe("Home page test", () => {
             data: {
                 data: []
             }
-        }))
-
-        AppStore.dispatch(loggedInUserSlice.actions.setUser({
-            accountHolder: 'gery',
-            accountNo: '123123'
         }))
 
         const renderEl = render(
@@ -106,11 +100,6 @@ describe("Home page test", () => {
                     },
                 ]
             }
-        }))
-
-        AppStore.dispatch(loggedInUserSlice.actions.setUser({
-            accountHolder: 'gery',
-            accountNo: '123123'
         }))
 
         const renderEl = render(
