@@ -20,3 +20,7 @@ jest.mock('react-native-config', () => ({
 
 // navbar have navigation element. ignore it for now
 jest.mock('../src/components/Navbar.tsx', () => () => null)
+
+jest.mock('react-native-gesture-handler', () => ({
+    ScrollView: () => jest.genMockFromModule('ScrollView')
+}));

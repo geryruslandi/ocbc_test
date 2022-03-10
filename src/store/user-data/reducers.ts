@@ -8,5 +8,9 @@ export const reducers = {
         state.token = null;
         state.transactions = [];
         state.balance = 0;
+    },
+
+    setUser(state: LoggedInUserState, action: PayloadAction<UserInterface>) {
+        state.profile = action.payload
     }
 }

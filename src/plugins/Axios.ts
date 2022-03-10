@@ -22,7 +22,6 @@ export default class Axios{
 
     setToken(token: string) {
         this.token = token
-        return this;
     }
 
     get(path: string){
