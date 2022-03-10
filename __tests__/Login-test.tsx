@@ -48,7 +48,7 @@ describe('Login page test', () => {
     it('will show error warning if login fails', async () => {
 
         (Axios.prototype.get as jest.Mock).mockReturnValue(Promise.reject({
-            status: 200,
+            status: 403,
             data: {
                 error: 'invalid login credential'
             }
@@ -67,5 +67,31 @@ describe('Login page test', () => {
 
         expect(UxHelper.showToast).toHaveBeenCalled()
 
+    })
+
+    it('will save user profile and token if login success', async() => {
+        (Axios.prototype.post as jest.Mock).mockReturnValue(Promise.resolve({
+            status: 200,
+            data: {
+                username: 'username',
+                accountNo: 'accountNo',
+                token: 'tokenHere'
+            }
+        }))
+
+        const { getByTestId } = render(
+            <Provider store={AppStore}>
+                <Login {...navigationProps}/>
+            </Provider>
+        );
+
+        fireEvent.changeText(getByTestId('TextInput.Username'), 'username');
+        fireEvent.changeText(getByTestId('TextInput.Password'), 'password');
+
+        await act(async() => fireEvent.press(getByTestId('Button.Login')) )
+
+        expect(AppStore.getState().userData.token).toEqual('tokenHere')
+        expect(AppStore.getState().userData.profile?.accountHolder).toEqual('username')
+        expect(AppStore.getState().userData.profile?.accountNo).toEqual('accountNo')
     })
 });

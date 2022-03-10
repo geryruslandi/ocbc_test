@@ -59,10 +59,10 @@
       "@testing-library/jest-native/extend-expect"
     ],
     "setupFiles": [
-        "./jest/jestSetup.js"
+      "./jest/jestSetup.js"
     ],
     "transformIgnorePatterns": [
-        "node_modules/(?!(react-native|@react-native|react-native-iphone-x-helper|react-native-vector-icons|@react-navigation)/)"
+      "node_modules/(?!(react-native|@react-native|react-native-iphone-x-helper|react-native-vector-icons|@react-navigation)/)"
     ],
     "moduleFileExtensions": [
       "ts",
