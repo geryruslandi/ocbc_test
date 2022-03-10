@@ -6,15 +6,20 @@ import Api from "../../plugins/Api";
 export const loginThunk = createAsyncThunk(
     'userData/login',
     async (data: any) => {
-        const res = await Api.login(data.username, data.password);
 
-        return {
-            user: {
-                accountHolder: res.data.username,
-                accountNo: res.data.accountNo
-            },
-            token: res.data.token
-        };
+        try {
+            const res = await Api.login(data.username, data.password);
+
+            return {
+                user: {
+                    accountHolder: res.data.username,
+                    accountNo: res.data.accountNo
+                },
+                token: res.data.token
+            };
+        } catch(err) {
+            throw new Error((err as any).response.data.error)
+        }
     }
 );
 
@@ -30,7 +35,7 @@ export const syncThunk = createAsyncThunk(
         const [balance, transactions] = await Promise.all([UserSync.getUserBalance(), UserSync.getUserTransactionHistory()])
 
         return {
-            balance,
+            balance ,
             transactions
         }
     }
@@ -45,15 +50,12 @@ export const registerAndLogin = createAsyncThunk(
             throw new Error(res.data.error)
         }
 
-        const resLogin = await Api.login(data.username, data.password);
+        store.dispatch(loginThunk({
+            username: data.username,
+            password: data.password,
+        }));
 
-        return {
-            user: {
-                accountHolder: resLogin.data.username,
-                accountNo: resLogin.data.accountNo
-            },
-            token: resLogin.data.token
-        };
+        return 0;
     }
 )
 
@@ -66,8 +68,7 @@ export const submitTransfer = createAsyncThunk(
 
             store.dispatch(syncThunk());
         } catch(err) {
-            throw new Error(err.response.data.error);
-
+            throw new Error((err as any).response.data.error);
         }
     }
 )

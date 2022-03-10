@@ -10,6 +10,7 @@ export default function RichTextInput(props: Props) {
     return (
         <View style={style}>
             <TextInput
+                testID={props.testID}
                 label={props.placeholder}
                 value={props.value}
                 onChangeText={props.onChange}
@@ -39,6 +40,7 @@ const styles = StyleSheet.create({
 });
 
 type Props = {
+    testID?: string,
     value: string,
     secureTextEntry?: boolean,
     error?: string,
