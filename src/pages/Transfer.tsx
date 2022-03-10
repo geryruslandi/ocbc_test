@@ -42,10 +42,10 @@ export default function Transfer() {
 
             const users = res.data.data.map((item: any) => new User({id: item.id, accountNo: item.accountNo, name: item.name}))
             setPayees(users);
-        })
+        }).catch(e => console.log(e.response.data))
     }, [])
 
-    const payeesElement = payees.map(payee => <Picker.Item testID={payee.accountNo} key={payee.accountNo} fontFamily='Ubuntu-Medium' label={payee.name} value={payee.accountNo} />)
+    const payeesElement = payees.map(payee => <Picker.Item key={payee.accountNo} fontFamily='Ubuntu-Medium' label={payee.name} value={payee.accountNo} />)
 
     async function submit() {
         if(loading) return;

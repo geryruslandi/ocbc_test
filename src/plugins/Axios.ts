@@ -1,5 +1,7 @@
-import axios, { AxiosInstance, AxiosRequestHeaders } from "axios";
+import axios, { AxiosError, AxiosInstance, AxiosRequestHeaders } from "axios";
 import { ToastAndroid } from "react-native";
+import store from "../store";
+import { loggedInUserSlice } from "../store/user-data";
 
 export default class Axios{
 
@@ -10,14 +12,6 @@ export default class Axios{
         this.axiosClient = axios.create({
             baseURL: baseUrl
         });
-
-        this.axiosClient.interceptors.response.use(
-            (response) => response,
-            (error) => {
-                ToastAndroid.show(error.response.data.error, ToastAndroid.LONG)
-                return Promise.reject(error)
-            }
-        )
     }
 
     setToken(token: string) {
@@ -25,15 +19,35 @@ export default class Axios{
     }
 
     get(path: string){
-        return this.axiosClient.get(path, {
-            headers: this.generateHeader()
-        });
+        try {
+
+            return this.axiosClient.get(path, {
+                headers: this.generateHeader()
+            });
+        } catch(error) {
+            this.handleError(error)
+            throw error;
+        }
+
     }
 
-    post(path: string, body: any){
-        return this.axiosClient.post(path, body, {
-            headers: this.generateHeader()
-        });
+    async post(path: string, body: any){
+        try {
+            return this.axiosClient.post(path, body, {
+                headers: this.generateHeader()
+            });
+        } catch(error) {
+            this.handleError(error)
+            throw error;
+        }
+    }
+
+    handleError(error: AxiosError) {
+
+        if(error.response && error.response.data.error.name == 'TokenExpiredError')
+        {
+            store.dispatch(loggedInUserSlice.actions.logout())
+        }
     }
 
     generateHeader(): {Authorization: string} | {}{

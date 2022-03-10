@@ -8,6 +8,8 @@ import Axios from '../src/plugins/Axios';
 import { act } from 'react-test-renderer';
 import UxHelper from '../src/utils/UxHelper';
 import { loggedInUserSlice } from '../src/store/user-data';
+import { syncThunk } from '../src/store/user-data/thunks';
+import Api from '../src/plugins/Api';
 
 const navigationProps = {
     navigation: {
@@ -15,8 +17,26 @@ const navigationProps = {
     }
 } as any;
 
-jest.mock('../src/plugins/Axios');
+jest.mock('../src/plugins/Api');
+jest.mock('../src/plugins/Axios', () => {
+    return jest.fn().mockImplementation(() => {
+        return {
+            get: () => Promise.reject({
+                status: 403,
+                data:{
+                    "status": "failed",
+                    "error": {
+                        "name": "TokenExpiredError",
+                        "message": "jwt expired",
+                        "expiredAt": "2022-03-10T20:40:14.000Z"
+                    }
+                }
+            })
+        }
+    })
+});
 jest.mock('../src/utils/UxHelper', () =>({showToast: jest.fn()}));
+
 
 describe('Login page test', () => {
 
@@ -48,7 +68,7 @@ describe('Login page test', () => {
 
     it('will show error warning if login fails', async () => {
 
-        (Axios.prototype.post as jest.Mock).mockReturnValue(Promise.reject({
+        (Api.login as jest.Mock).mockReturnValue(Promise.reject({
             status: 403,
             data: {
                 error: 'invalid login credential'
@@ -71,7 +91,7 @@ describe('Login page test', () => {
     })
 
     it('will save user profile and token if login success', async() => {
-        (Axios.prototype.post as jest.Mock).mockReturnValue(Promise.resolve({
+        (Api.login as jest.Mock).mockReturnValue(Promise.resolve({
             status: 200,
             data: {
                 username: 'username',
@@ -124,4 +144,18 @@ describe('Login page test', () => {
         expect(AppStore.getState().userData.token).toEqual(null)
         expect(AppStore.getState().userData.transactions.length).toEqual(0)
     })
+
+    // it('will logging out user when users jwt is expired', async() => {
+
+    //     jest.spyOn(global.console, 'log')
+
+    //     AppStore.dispatch(loggedInUserSlice.actions.setUser({
+    //         accountHolder: 'gery',
+    //         accountNo: '123123'
+    //     }))
+
+    //     AppStore.dispatch(syncThunk())
+
+    //     expect(AppStore.getState().userData.profile).toEqual(null)
+    // })
 });

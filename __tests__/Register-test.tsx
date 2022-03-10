@@ -3,10 +3,10 @@ import React from 'react';
 import { render, fireEvent } from '@testing-library/react-native';
 import { Provider } from 'react-redux';
 import AppStore from '../src/store';
-import Axios from '../src/plugins/Axios';
 import { act } from 'react-test-renderer';
 import UxHelper from '../src/utils/UxHelper';
 import Register from '../src/pages/Register';
+import Api from '../src/plugins/Api';
 
 const navigationProps = {
     navigation: {
@@ -14,7 +14,7 @@ const navigationProps = {
     }
 } as any;
 
-jest.mock('../src/plugins/Axios');
+jest.mock('../src/plugins/Api');
 jest.mock('../src/utils/UxHelper');
 
 describe('Register page test', () => {
@@ -76,7 +76,7 @@ describe('Register page test', () => {
 
     it('will show error warning if registration fails', async () => {
 
-        (Axios.prototype.post as jest.Mock).mockReturnValue(Promise.reject({
+        (Api.register as jest.Mock).mockReturnValue(Promise.reject({
             status: 403,
             data: {
                 error: 'username already exists'
@@ -100,7 +100,13 @@ describe('Register page test', () => {
     })
 
     it('will logging in user if registration success', async() => {
-        (Axios.prototype.post as jest.Mock).mockReturnValue(Promise.resolve({
+        (Api.register as jest.Mock).mockReturnValue(Promise.resolve({
+            status: 200,
+            data: {}
+        }));
+
+        Api.login;
+        (Api.login as jest.Mock).mockReturnValue(Promise.resolve({
             status: 200,
             data: {
                 username: 'username',

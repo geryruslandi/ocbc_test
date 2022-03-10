@@ -44,18 +44,19 @@ export const syncThunk = createAsyncThunk(
 export const registerAndLogin = createAsyncThunk(
     'userData/registerAndLogin',
     async (data: {username: string, password: string}) => {
-        const res = await Api.register(data.username, data.password);
 
-        if(res.status != 200) {
-            throw new Error(res.data.error)
+        try {
+            await Api.register(data.username, data.password);
+
+            store.dispatch(loginThunk({
+                username: data.username,
+                password: data.password,
+            }));
+
+            return 0;
+        } catch(err) {
+            throw new Error(err.response.data.error)
         }
-
-        store.dispatch(loginThunk({
-            username: data.username,
-            password: data.password,
-        }));
-
-        return 0;
     }
 )
 
