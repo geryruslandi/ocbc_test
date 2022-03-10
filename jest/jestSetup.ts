@@ -17,3 +17,6 @@ jest.mock('react-native/Libraries/Animated/NativeAnimatedHelper');
 jest.mock('react-native-config', () => ({
     BASE_API_URL: 'test'
 }))
+
+// navbar have navigation element. ignore it for now
+jest.mock('../src/components/Navbar.tsx', () => () => null)

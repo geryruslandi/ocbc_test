@@ -47,7 +47,7 @@ export default function Navbar(props: NavbarProps) {
                     <Text style={style.title}>{props.title}</Text>
                 }
             </View>
-            <View style={style.rigthSubContainer}>
+            <View style={style.rightSubContainer}>
                 { props.showLogout &&
                     <TouchableOpacity style={style.logoutContainer} onPress={logoutFunction}>
                         <Icon name="logout" size={15} style={{fontWeight: 'bold', marginRight: 5}}/>
@@ -75,7 +75,7 @@ const style = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     },
-    rigthSubContainer: {
+    rightSubContainer: {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',

@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { UserInterface } from "../../models/User";
-import { loginThunk, syncThunk } from "./thunks";
+import { loginThunk, registerAndLogin, syncThunk } from "./thunks";
 import { reducers } from "./reducers";
 import { TransactionInterface } from "../../models/Transaction";
 import UxHelper from "../../utils/UxHelper";
@@ -31,7 +31,10 @@ export const loggedInUserSlice = createSlice({
         });
         builder.addCase(loginThunk.rejected, (state, action) => {
             UxHelper.showToast(action.error.message as string);
-        }),
+        });
+        builder.addCase(registerAndLogin.rejected, (state, action) => {
+            UxHelper.showToast(action.error.message as string);
+        });
         builder.addCase(syncThunk.fulfilled, (state, action) => {
             state.balance = action.payload.balance;
             state.transactions = action.payload.transactions;

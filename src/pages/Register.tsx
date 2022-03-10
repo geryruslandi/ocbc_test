@@ -36,10 +36,8 @@ export default function Register(props: PropsType) {
         if(password == '') newErrors.password = "Password is required"
         else newErrors.password = "";
 
-        if(passwordConfirmation == '') newErrors.passwordConfirmation = "Password Confirmation is required"
-        else newErrors.passwordConfirmation = "";
-
-        if(passwordConfirmation != password) newErrors.passwordConfirmation = "Password Confirmation must be same with Password"
+        if(passwordConfirmation == '') newErrors.passwordConfirmation = "Password Confirmation is required";
+        else if(passwordConfirmation != password) newErrors.passwordConfirmation = "Password Confirmation must be same with Password";
         else newErrors.passwordConfirmation = "";
 
         setErrors({...newErrors})
@@ -64,6 +62,7 @@ export default function Register(props: PropsType) {
                 <View style={styles.inputContainer}>
                     <View style={{marginBottom: 30}}>
                         <RichTextInput
+                            testID="TextInput.Username"
                             placeholder='Username'
                             error={errors.username}
                             value={username}
@@ -71,6 +70,7 @@ export default function Register(props: PropsType) {
                             style={{marginBottom: 10}}
                         />
                         <RichTextInput
+                            testID="TextInput.Password"
                             placeholder='Password'
                             error={errors.password}
                             value={password}
@@ -79,7 +79,8 @@ export default function Register(props: PropsType) {
                             style={{marginBottom: 5}}
                         />
                         <RichTextInput
-                            placeholder='Password Confrimation'
+                            testID="TextInput.PasswordConfirmation"
+                            placeholder='Password Confirmation'
                             error={errors.passwordConfirmation}
                             value={passwordConfirmation}
                             secureTextEntry
@@ -88,6 +89,7 @@ export default function Register(props: PropsType) {
                         />
                     </View>
                     <Button
+                        testID="Button.Register"
                         color="#0DBC5D"
                         onPress={register}
                         loading={buttonLoading}
