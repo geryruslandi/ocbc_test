@@ -60,6 +60,7 @@ export default function Login(props: PropsType) {
             <View style={styles.inputContainer}>
                 <View style={{marginBottom: 30}}>
                     <RichTextInput
+                        testID='TextInput.Username'
                         placeholder='Username'
                         error={errors.username}
                         value={username}
@@ -67,6 +68,7 @@ export default function Login(props: PropsType) {
                         style={{marginBottom: 10}}
                     />
                     <RichTextInput
+                        testID='TextInput.Password'
                         placeholder='Password'
                         error={errors.password}
                         value={password}
@@ -77,6 +79,7 @@ export default function Login(props: PropsType) {
                 </View>
                 <Button
                     loading={loginButtonLoading}
+                    testID="Button.Login"
                     color="#EF393B"
                     mode="contained"
                     onPress={login}>

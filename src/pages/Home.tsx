@@ -8,13 +8,11 @@ import { groupedTransactionsPerDay, loggedInUserSelector } from '../store/user-d
 import { UserInterface } from '../models/User';
 import DailyTransactionCard from '../components/DailyTransactionCard';
 import moment from 'moment';
-import { ScrollView } from 'react-native-gesture-handler';
-import { StackNavigationProp } from '@react-navigation/stack';
-import { RootStackParamList } from '../AppRoute';
+import { ScrollView } from 'react-native';
 
 const width = Dimensions.get('window').width;
 
-export default function Home(props: PropsType) {
+export default function Home(props: any) {
 
     const dispatch = useAppDispatch();
     const userBalance = useAppSelector(state => state.userData.balance)
@@ -127,7 +125,3 @@ const styles = StyleSheet.create({
         marginHorizontal: 20,
     }
 });
-
-type PropsType = {
-    navigation : StackNavigationProp<RootStackParamList, 'Home'>;
-}

@@ -81,3 +81,12 @@ After that, what you need to do is just create [`.env`] file inside root project
 for [`.env`] file, you need to follow the referrence from [`.env.example`] and fill the required environtment vairables into those file (which is only BASE_API_URL for now).
 
 Now all of the required steps is completed, what left is only to run this Project's App into your phone. Execute this command [`npm run android`], this will compile the app and run it to your phone.
+
+# Run Unit Test
+This project is using component test. Test framework that used on this project is `jest`. For assertion, this project is using from `@testing-library/jest-native` and `@teting-libray/react-native`
+
+The way this project simulate component on testing is not entirely loading `<App/>` component, but load it one by one as needed.
+
+For this testing purpose, native features cant be accessed, so to handle this, i create a mocking files to handle native library loading.
+
+To run unit test is simply run ``npm test``

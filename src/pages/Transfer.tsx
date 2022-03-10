@@ -35,13 +35,14 @@ export default function Transfer() {
 
     useEffect(() => {
         Api.getPayees().then((res) => {
+
             if(res.status != 200) {
                 return ;
             }
 
             const users = res.data.data.map((item: any) => new User({id: item.id, accountNo: item.accountNo, name: item.name}))
             setPayees(users);
-        })
+        }).catch(e => console.log(e.response.data))
     }, [])
 
     const payeesElement = payees.map(payee => <Picker.Item key={payee.accountNo} fontFamily='Ubuntu-Medium' label={payee.name} value={payee.accountNo} />)
@@ -92,6 +93,7 @@ export default function Transfer() {
                 <View style={styles.dropDownContainer}>
                     <Text style={styles.label}>Payee</Text>
                     <Picker
+                        testID="Picker.Payee"
                         selectedValue={selectedPayee}
                         onValueChange={(value) => setSelectedPayee(value)}>
                         {payeesElement}
@@ -102,6 +104,7 @@ export default function Transfer() {
                     <View style={styles.amountTextInputContainer}>
                         <Text style={styles.amountCurrency}>SGD</Text>
                         <TextInput
+                            testID="TextInput.Amount"
                             keyboardType='phone-pad'
                             value={amount}
                             onChangeText={setAmount}
@@ -124,6 +127,7 @@ export default function Transfer() {
                         backgroundColor: '#91E6A7'
                     }: {})}}>
                         <Text
+                            testID="Text.Message"
                             style={{
                                 ...styles.messageTextColor,
                                 ...(notificationMessage.type == 'success' ? {color: 'green'} : {})}}>
@@ -134,6 +138,7 @@ export default function Transfer() {
             </View>
             <View style={styles.transferContainer}>
                 <Button
+                    testID="Button.SubmitTransfer"
                     loading={loading}
                     style={{marginTop: 10}}
                     color="#EE4645"
