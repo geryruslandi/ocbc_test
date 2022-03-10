@@ -11,3 +11,5 @@ jest.mock('redux-persist', () => {
         .mockImplementation((config, reducers) => reducers),
     };
   });
+
+  jest.mock('react-native/Libraries/Animated/NativeAnimatedHelper');

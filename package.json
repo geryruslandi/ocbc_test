@@ -62,7 +62,7 @@
         "./jest/jestSetup.js"
     ],
     "transformIgnorePatterns": [
-        "node_modules/(?!(react-native|@react-native|react-native-iphone-x-helper|react-native-vector-icons)/)"
+        "node_modules/(?!(react-native|@react-native|react-native-iphone-x-helper|react-native-vector-icons|@react-navigation)/)"
     ],
     "moduleFileExtensions": [
       "ts",
